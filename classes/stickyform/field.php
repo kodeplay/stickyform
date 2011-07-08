@@ -4,15 +4,15 @@ class Stickyform_Field {
 
     private $_label;
 
-    private $_form_element;
+    private $_element;
 
     private $_error;
 
     private $_tooltip;
 
-    public function __construct($label, $form_element, $error=NULL, $tooltip=NULL) {
+    public function __construct($label, $element, $error=NULL, $tooltip=NULL) {
         $this->_label = $label;
-        $this->_form_element = $form_element;
+        $this->_element = $element;
         $this->_error = $error;
         $this->_tooltip = $tooltip;
     }
@@ -21,8 +21,8 @@ class Stickyform_Field {
         return $this->_label;
     }    
 
-    public function form_element() {
-        return $this->_form_element;
+    public function element() {
+        return $this->_element;
     }
 
     public function error() {
