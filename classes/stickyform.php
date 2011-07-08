@@ -136,6 +136,7 @@ class Stickyform {
             'type'  => $type,
             'meta'  => $meta
         );
+        return $this;
     }
 
     /**
