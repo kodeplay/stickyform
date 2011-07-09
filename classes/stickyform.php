@@ -102,6 +102,7 @@ class Stickyform {
         $this->_attributes = $attributes;  
         $this->_startform = Form::open($action, $attributes);
         $this->_endform = Form::close();
+        $this->_errors = $errors;
     }
 
     /**
@@ -130,6 +131,8 @@ class Stickyform {
         if (in_array($name, self::$RESERVED_KEYWORDS)) {
             throw new Stickyform_Exception($name . ' is a reserved keyword in Stickyform class, please choose something else');
         }
+        $error = Arr::get($this->_errors, $name, '');
+        $meta = array_merge($meta, array('error' => $error));
         $this->_fields[] = array(
             'label' => $label,
             'name'  => $name,
@@ -202,7 +205,7 @@ class Stickyform {
         $value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $form_element = Form::input($name, $value, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);
+        return new Stickyform_Field($label, $form_element, $meta['error']);
     }
 
     /**
@@ -211,7 +214,7 @@ class Stickyform {
     private function _password($label, $name, $meta=array()) {
         $label = Form::label($name, $label);
         $form_element = Form::password($name, '', self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);
+        return new Stickyform_Field($label, $form_element, $meta['error']);
     }
 
     /**
@@ -221,7 +224,7 @@ class Stickyform {
     private function _hidden($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
         $form_element = Form::hidden($name, $value, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
     /**
@@ -231,7 +234,7 @@ class Stickyform {
         $value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $form_element = Form::radio($name, $value, (bool)$value, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
     /**
@@ -249,7 +252,7 @@ class Stickyform {
         $value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $form_element = Form::checkbox($name, $value, (bool)$value, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);
+        return new Stickyform_Field($label, $form_element, $meta['error']);
     }
 
     /**
@@ -258,7 +261,7 @@ class Stickyform {
     private function _multi_checkbox($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
         $field = Form::label($name, $label);
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
     /**
@@ -269,7 +272,7 @@ class Stickyform {
         $options = isset($meta['options']) ? $meta['options'] : NULL;
         $selected = $this->_get_value($name);
         $form_element = Form::select($name, $options, $selected, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
     /**
@@ -279,7 +282,7 @@ class Stickyform {
         $value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $form_element = Form::input($name, $value, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
     /**
@@ -297,6 +300,6 @@ class Stickyform {
      */
     private function _submit($label, $name, $meta=array()) {
         $form_element = Form::submit($name, $label, self::_get_meta('attributes', $meta));
-        return new Stickyform_Field($label, $form_element);        
+        return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 }
