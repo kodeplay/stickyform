@@ -250,13 +250,12 @@ class Stickyform {
      * checkbox value will be passed in the meta array as value
      */
     private function _checkbox($label, $name, $meta=array()) {
-        $selected_value = $this->_get_value($name);
+        $checked_value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $attr = self::_get_meta('attributes', $meta);
         $value = $attr['value'];
-        $selected = ($selected_value == $value) ? 'selected' : '';
-        $attr = array_merge($attr, array('selected'=>$selected));
-        $form_element = Form::checkbox($name, $value, (bool)$value, $attr);
+        $checked = ($checked_value == $value);
+        $form_element = Form::checkbox($name, $value, $checked, $attr);
         return new Stickyform_Field($label, $form_element, $meta['error']);
     }
 
