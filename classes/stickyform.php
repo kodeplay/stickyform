@@ -287,7 +287,7 @@ class Stickyform {
     private function _textarea($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
         $label = Form::label($name, $label);
-        $form_element = Form::input($name, $value, self::_get_meta('attributes', $meta));
+        $form_element = Form::textarea($name, $value, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
