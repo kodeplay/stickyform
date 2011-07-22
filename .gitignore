@@ -1,0 +1,11 @@
+# sys created files
+*~
+*.swp
+Thumbs.db
+\#*#
+.#*
+
+# eclipse files
+.buildpath
+.project
+.settings/

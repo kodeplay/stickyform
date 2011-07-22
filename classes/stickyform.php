@@ -196,13 +196,27 @@ class Stickyform {
         return isset($meta[$key]) ? $meta[$key] : NULL;
     }
 
-    
+    /**
+     * Helper function to get the correct name attribute for the 
+     * form field. ie if $meta['attributes']['name'] is explicitly specified,
+     * use if other wise use name. 
+     * This workaround is used to allow name attributes such as "selected[]"
+     * in this case, $name will be class property name friendly eg. list_selected
+     * while the actual name attr selected[] will be specified in $meta['attributes']['name']
+     * @param String $name 
+     * @param Array $meta
+     */
+    private static function _get_name_attr($name, $meta) {
+        $attributes = self::_get_meta('attributes', $meta);
+        return isset($attributes['name']) ? $attributes['name'] : $name;        
+    }    
 
     /**
      * @return Stickyform_Field for text field
      */
     private function _text($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $form_element = Form::input($name, $value, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);
@@ -223,6 +237,7 @@ class Stickyform {
      */
     private function _hidden($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $form_element = Form::hidden($name, $value, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
@@ -232,6 +247,7 @@ class Stickyform {
      */
     private function _radio($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $form_element = Form::radio($name, $value, (bool)$value, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
@@ -251,6 +267,7 @@ class Stickyform {
      */
     private function _checkbox($label, $name, $meta=array()) {
         $checked_value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $attr = self::_get_meta('attributes', $meta);
         $value = $attr['value'];
@@ -264,6 +281,7 @@ class Stickyform {
      */
     private function _multi_checkbox($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $field = Form::label($name, $label);
         return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
@@ -272,11 +290,10 @@ class Stickyform {
      * @return Stickyform_Field for selectbox/combobox field
      */
     private function _select($label, $name, $meta=array()) {
+        $selected = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $options = isset($meta['options']) ? $meta['options'] : NULL;
-        $selected = $this->_get_value($name);
-        $attributes = self::_get_meta('attributes', $meta);
-        $name = isset($attributes['name']) ? $attributes['name'] : $name;
         $form_element = Form::select($name, $options, $selected, $attributes);
         return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
@@ -286,6 +303,7 @@ class Stickyform {
      */
     private function _textarea($label, $name, $meta=array()) {
         $value = $this->_get_value($name);
+        $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $form_element = Form::textarea($name, $value, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
