@@ -294,7 +294,7 @@ class Stickyform {
         $name = self::_get_name_attr($name, $meta);
         $label = Form::label($name, $label);
         $options = isset($meta['options']) ? $meta['options'] : NULL;
-        $form_element = Form::select($name, $options, $selected, $attributes);
+        $form_element = Form::select($name, $options, $selected, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
     }
 
