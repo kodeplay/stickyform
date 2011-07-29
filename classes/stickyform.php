@@ -253,6 +253,7 @@ class Stickyform {
         $checked_value = $this->_get_value($name);
         $label = Form::label($name, $label);
         $attr = self::_get_meta('attributes', $meta);
+        $name = isset($attr['name']) ? $attr['name'] : $name;
         $value = $attr['value'];
         $checked = ($checked_value == $value);
         $form_element = Form::checkbox($name, $value, $checked, $attr);
