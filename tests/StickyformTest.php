@@ -84,6 +84,14 @@ class StickyformTest extends Kohana_UnitTest_TestCase {
         $this->assertEquals($element, $this->form->password->element());
     }
 
+    public function test_append_file() {
+        $this->form->append('CSV File:', 'csv_file', 'file')
+            ->process();
+        $element = Form::file('csv_file');
+        $this->assertEquals($element, $this->form->csv_file->element());
+        $this->assertEquals('CSV File:', $this->form->csv_file->label());
+    }
+
     /**
      * Test the pseudo name ie actual name attr specified through the attributes array 
      * and name passed in the method is a class property friendly key 

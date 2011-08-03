@@ -85,7 +85,8 @@ class Stickyform {
         'hidden'   => '_hidden',
         'textarea' => '_textarea',
         'button'   => '_button',
-        'submit'   => '_submit'
+        'submit'   => '_submit',
+        'file'     => '_file',
     );
 
     private static $RESERVED_KEYWORDS = array(
@@ -326,5 +327,10 @@ class Stickyform {
     private function _submit($label, $name, $meta=array()) {
         $form_element = Form::submit($name, $label, self::_get_meta('attributes', $meta));
         return new Stickyform_Field($label, $form_element, $meta['error']);        
+    }
+
+    private function _file($label, $name, $meta=array()) {
+        $form_element = Form::file($name, self::_get_meta('attributes', $meta));
+        return new Stickyform_Field($label, $form_element, $meta['error']);
     }
 }
