@@ -213,6 +213,30 @@ class Stickyform {
     }    
 
     /**
+     * Helper function to convert all the array keys to the variables of key 
+     * This workaround is used to convert the sub array of post to the variables (keys)
+     * of the array
+     * @param Array $data 
+     * @return Array $array
+     */
+    public static function ungroup_params($data){
+        
+        if(!is_array($data)) return array();
+        
+        $array = array();
+        foreach($data as $key => $value){
+            if(is_array($value)){
+                foreach($value as $k => $v){
+                    $array[$key . '_' . $k] = $v;
+                }
+            } else {
+                $array[$key] = $value;
+            }
+        }
+        return $array;
+    }
+    
+    /**
      * @return Stickyform_Field for text field
      */
     private function _text($label, $name, $meta=array()) {
