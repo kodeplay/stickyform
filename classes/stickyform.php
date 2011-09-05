@@ -107,7 +107,7 @@ class Stickyform {
     }
 
     /**
-     * @return String html markup of the form
+     * Method to process the fields and create instance variables
      * @throws Stickyform_Exception if type of form field not in self::$FIELD_TYPES
      */
     public function process() {
@@ -127,6 +127,7 @@ class Stickyform {
      * @param String type = 'text'
      * @param String meta = array any other data required.
      * Some form fields will have specific meta data and will have to be passed
+     * @return Stickyform current object
      */
     public function append($label, $name, $type='text', $meta = array()) {
         if (in_array($name, self::$RESERVED_KEYWORDS)) {
@@ -144,14 +145,14 @@ class Stickyform {
     }
 
     /**
-     * @return the starting form tag
+     * @return the starting form tag (html markup)
      */
     public function startform() {
         return $this->_startform;
     }
 
     /**
-     * @return the ending form tag
+     * @return the ending form tag (html markup)
      */
     public function endform() {
         return $this->_endform;
@@ -206,6 +207,7 @@ class Stickyform {
      * while the actual name attr selected[] will be specified in $meta['attributes']['name']
      * @param String $name 
      * @param Array $meta
+     * @return String correct name attribute with which the form is submitted
      */
     private static function _get_name_attr($name, $meta) {
         $attributes = self::_get_meta('attributes', $meta);
@@ -282,8 +284,7 @@ class Stickyform {
      * @return Stickyform_Field for dual radio field (typical yes/no)
      */
     private function _dual_radio($label, $name, $meta=array()) {
-        
-
+        // to be implemented
     }
 
     /**
