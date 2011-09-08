@@ -42,12 +42,11 @@ $form->append('First Name', 'firstname', 'text')
 ```
 
 In view :
-```html
 
 ```php
-<?php echo $form->startform(); ?>
+echo $form->startform();
 ```
-
+```html
 <table class="formcontainer">
 
     <tr>
@@ -77,10 +76,11 @@ In view :
     </tr>
     
 <table>
+```
 ```php
-<?php echo $form->endForm(); ?>
+echo $form->endForm();
 ```
-```
+
 
 Any feedback or contribution is welcome.
 
